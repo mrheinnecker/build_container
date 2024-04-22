@@ -1,0 +1,51 @@
+Bootstrap: docker
+#From: bioconductor/bioconductor_docker:devel
+From: mambaorg/micromamba:1.5.6-bookworm-slim
+
+%files
+  ./podestTools_0.0.0.100.tar.gz /podestTools_0.0.0.100.tar.gz
+  ./ssh_0.9.1.tar.gz /ssh_0.9.1.tar.gz
+
+%environment
+  export PATH="/opt/conda/envs/topart_calculator/bin:$PATH"
+
+%post
+
+  micromamba create \
+  --quiet --yes \
+  --prefix "/opt/conda/envs/topart_calculator" \
+  -c defaults -c bioconda -c conda-forge \
+  "libssh" \
+  "r-base>=4.3.2" \
+  bioconductor-genomeinfodbdata bioconductor-bsgenome.hsapiens.ucsc.hg19 \
+  bioconductor-multiassayexperiment bioconductor-raggedexperiment \
+  r-vcfr \
+  bioconductor-genomicalignments bioconductor-iranges bioconductor-genomicranges bioconductor-rsamtools bioconductor-variantannotation \
+  r-tidyverse r-stringi \
+  r-dplyr r-stringr r-readr r-tibble \
+  r-bookdown bioconductor-biocstyle \
+  r-igraph r-cpp11 r-crayon r-getopt r-devtools r-rpostgres r-ggalluvial r-cowplot
+  micromamba clean --quiet --yes --all
+  micromamba env export --no-build --prefix "/opt/conda/envs/topart_calculator" > /topart_calculator.yml
+  export PATH="/opt/conda/envs/topart_calculator/bin:$PATH"
+#conda install conda-forge::libssh
+
+  #R -e 'install.packages("devtools")'		
+  #R -e 'devtools::install_local( "/ssh_0.9.1.tar.gz", dependencies = TRUE, upgrade = FALSE )'
+  R -e 'devtools::install_local( "/podestTools_0.0.0.100.tar.gz", dependencies = TRUE, upgrade = FALSE )'
+#  R -e 'install.packages("BiocManager")'
+#  R -e 'BiocManager::install("GenomicRanges")'
+#  R -e 'BiocManager::install("VariantAnnotation")'
+#  R -e 'BiocManager::install("Rsamtools")'
+#  R -e 'BiocManager::install("MultiAssayExperiment")'
+#  R -e 'BiocManager::install("RaggedExperiment")'
+  
+
+## build
+# cd /mnt/c/Users/macrh/repos/build_container/podest
+# sudo singularity build /mnt/d/container/podest.sif podest.def
+
+
+
+
+
