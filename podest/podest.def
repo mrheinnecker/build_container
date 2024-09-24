@@ -4,7 +4,9 @@ From: mambaorg/micromamba:1.5.6-bookworm-slim
 
 %files
   ./podestTools_0.0.0.100.tar.gz /podestTools_0.0.0.100.tar.gz
-  ./ssh_0.9.1.tar.gz /ssh_0.9.1.tar.gz
+  ./ZygosityPredictor_1.4.0.tar.gz /ZygosityPredictor_1.4.0.tar.gz
+  .//clusterProfiler_4.12.0.tar.gz /clusterProfiler_4.12.0.tar.gz
+#  ./ssh_0.9.1.tar.gz /ssh_0.9.1.tar.gz
 
 %environment
   export PATH="/opt/conda/envs/topart_calculator/bin:$PATH"
@@ -20,26 +22,19 @@ From: mambaorg/micromamba:1.5.6-bookworm-slim
   bioconductor-genomeinfodbdata bioconductor-bsgenome.hsapiens.ucsc.hg19 \
   bioconductor-multiassayexperiment bioconductor-raggedexperiment \
   r-vcfr \
-  bioconductor-genomicalignments bioconductor-iranges bioconductor-genomicranges bioconductor-rsamtools bioconductor-variantannotation \
+  bioconductor-genomicalignments bioconductor-iranges bioconductor-genomicranges bioconductor-rsamtools bioconductor-variantannotation bioconductor-deseq2 bioconductor-omnipathr bioconductor-decoupler bioconductor-progeny bioconductor-complexheatmap bioconductor-org.hs.eg.db bioconductor-reactomepa bioconductor-dose bioconductor-annotationdbi bioconductor-simplifyenrichment \
   r-tidyverse r-stringi \
   r-dplyr r-stringr r-readr r-tibble \
   r-bookdown bioconductor-biocstyle \
-  r-igraph r-cpp11 r-crayon r-getopt r-devtools r-rpostgres r-ggalluvial r-cowplot
+  r-igraph r-cpp11 r-crayon r-getopt r-devtools r-rpostgres r-ggalluvial r-cowplot r-ggrepel r-ggnewscale r-ggpubr r-gridExtra r-circlize r-msigdbr r-caret r-randomForest r-proc
   micromamba clean --quiet --yes --all
   micromamba env export --no-build --prefix "/opt/conda/envs/topart_calculator" > /topart_calculator.yml
   export PATH="/opt/conda/envs/topart_calculator/bin:$PATH"
-#conda install conda-forge::libssh
 
-  #R -e 'install.packages("devtools")'		
-  #R -e 'devtools::install_local( "/ssh_0.9.1.tar.gz", dependencies = TRUE, upgrade = FALSE )'
   R -e 'devtools::install_local( "/podestTools_0.0.0.100.tar.gz", dependencies = TRUE, upgrade = FALSE )'
-#  R -e 'install.packages("BiocManager")'
-#  R -e 'BiocManager::install("GenomicRanges")'
-#  R -e 'BiocManager::install("VariantAnnotation")'
-#  R -e 'BiocManager::install("Rsamtools")'
-#  R -e 'BiocManager::install("MultiAssayExperiment")'
-#  R -e 'BiocManager::install("RaggedExperiment")'
-  
+  R -e 'devtools::install_local( "/clusterProfiler_4.12.0.tar.gz", dependencies = TRUE, upgrade = FALSE )'
+  R -e 'devtools::install_local( "/ZygosityPredictor_1.4.0.tar.gz", dependencies = TRUE, upgrade = FALSE )'
+  R -e 'devtools::install_github("https://github.com/CO-DKFZ/TopArtCalculator", dependencies = FALSE)'
 
 ## build
 # cd /mnt/c/Users/macrh/repos/build_container/podest
