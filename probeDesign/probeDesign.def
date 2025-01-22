@@ -1,6 +1,8 @@
 Bootstrap: docker
 From: ubuntu:20.04  # Or any base image suitable for your tool
 
+## sudo singularity build ~/container/test.sif ~/repos/build_container/probeDesign/probeDesign.def 
+
 %post
     # Update and install dependencies
     apt-get update
@@ -32,6 +34,11 @@ From: ubuntu:20.04  # Or any base image suitable for your tool
     cp random/fasta/alignmentConsensus.py /usr/local/bin/
     cp random/fasta/fastaRevCom.py /usr/local/bin/
     cp random/fasta/sequenceSelect.py /usr/local/bin/
+    cp random/fasta/multi2linefasta.py /usr/local/bin/
+
+
+    git clone https://github.com/MiguelMSandin/oligoN-design.git
+    cp oligoN-design/scripts/* /usr/local/bin/ -r
 
     chmod +x /usr/local/bin/*
     export PATH=/usr/local/bin:$PATH
