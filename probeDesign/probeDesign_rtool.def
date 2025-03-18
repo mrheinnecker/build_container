@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: bioconductor/bioconductor_docker:devel
+
+%environment
+    export PATH=/usr/local/bin:$PATH
+
+%post
+
+  R -e 'BiocManager::install("Biostrings")'
+  R -e 'install.packages("tidyverse")'
+  R -e 'install.packages("ggnewscale")'
+  R -e 'install.packages("getopt")'
+
+## build
+# cd /g/schwab/Marco/repos/build_container/probeDesign
+# sudo singularity build /g/schwab/Marco/container_legacy/probeDesign_rtool.sif probeDesign_rtool.def
+
